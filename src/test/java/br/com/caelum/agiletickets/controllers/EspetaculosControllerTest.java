@@ -1,6 +1,7 @@
 package br.com.caelum.agiletickets.controllers;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -98,6 +99,17 @@ public class EspetaculosControllerTest {
 		verifyZeroInteractions(result);
 	}
 
+	@Test
+	public void deveReservarTodosIngressos() throws Exception {
+		Sessao sessao = new Sessao();
+		sessao.setTotalIngressos(42);
+		
+		when(agenda.sessao(1234l)).thenReturn(sessao);
+		controller.reserva(1234l, 42);
+		
+		assertThat(sessao.getIngressosDisponiveis(), is(0));
+	}
+	
 	@Test
 	public void deveReservarSeASessaoTemIngressosSuficientes() throws Exception {
 		Sessao sessao = new Sessao();
